@@ -8,7 +8,7 @@ game = chess.pgn.read_game(pgn_file)
 engine = chess.engine.SimpleEngine.popen_uci("stockfish")
 
 board = game.board()
-previous_score = 0  # score before any moves
+previous_score = 0  
 
 move_number = 0
 for move in game.mainline_moves():
@@ -19,7 +19,6 @@ for move in game.mainline_moves():
     info = engine.analyse(board, chess.engine.Limit(time=0.2))
     score_obj = info["score"].white()
     
-    # Convert score to a plain number (handle checkmate lines safely)
     if score_obj.is_mate():
         current_score = 10000 if score_obj.mate() > 0 else -10000
     else:
@@ -27,7 +26,6 @@ for move in game.mainline_moves():
 
     change = current_score - previous_score
 
-    # Flag big swings as mistakes (threshold: 150 = 1.5 pawns worth)
     if abs(change) >= 150 and abs(previous_score) < 2000 and abs(current_score) < 2000:
         print(f"Move {move_number} ({player} played {move}): possible mistake! Eval swung by {change}")
 
