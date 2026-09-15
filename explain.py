@@ -24,7 +24,6 @@ for move in game.mainline_moves():
     player = "White" if board.turn == chess.WHITE else "Black"
     fen_before = board.fen()
 
-    # Get Stockfish's suggested best move BEFORE playing the real move
     best = engine.play(board, chess.engine.Limit(time=0.3))
     better_move = best.move
 
