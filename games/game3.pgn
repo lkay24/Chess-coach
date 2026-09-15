@@ -1,0 +1,6 @@
+[Event "Test Game 3"]
+[White "Player1"]
+[Black "Player2"]
+[Result "1-0"]
+
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9. O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qe7 16. Qxg5 Qxg5 17. Rxg5 exf5 18. exf5 O-O 19. Rg3 Bxf5 20. Nxf5 Rxf5 21. Bh3 Rf6 22. Rhg1 g6 23. Bxc8 Raxc8 24. Rxg6+ hxg6 25. Rxg6+ Kh7 26. Rg7+ Kh6 27. Ne4 1-0
