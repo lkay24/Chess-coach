@@ -15,7 +15,6 @@ client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 app = FastAPI()
 
-# Allows your HTML page to talk to this server
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -34,8 +33,8 @@ def describe_defenders(board, square):
     }
 
     directions = [
-        (1, 0), (-1, 0), (0, 1), (0, -1),      # straight lines (rook/queen directions)
-        (1, 1), (1, -1), (-1, 1), (-1, -1)     # diagonals (bishop/queen directions)
+        (1, 0), (-1, 0), (0, 1), (0, -1),      
+        (1, 1), (1, -1), (-1, 1), (-1, -1)     
     ]
 
     is_diagonal = {(1,1), (1,-1), (-1,1), (-1,-1)}
@@ -45,13 +44,11 @@ def describe_defenders(board, square):
 
     results = {chess.WHITE: [], chess.BLACK: []}
 
-    # Direct defenders/attackers (knights, pawns, kings, and first sliding piece each direction)
     for color in [chess.WHITE, chess.BLACK]:
         for sq in board.attackers(color, square):
             piece = board.piece_at(sq)
             results[color].append(f"{piece_names[piece.piece_type]} on {chess.square_name(sq)}")
 
-    # Now check for backup (x-ray) sliding pieces behind the direct ones
     for (df, dr) in directions:
         f, r = file_start + df, rank_start + dr
         found_first = False
@@ -60,9 +57,8 @@ def describe_defenders(board, square):
             piece = board.piece_at(sq)
             if piece:
                 if not found_first:
-                    found_first = True  # this is the direct blocker, already counted above
+                    found_first = True  
                 else:
-                    # this is the piece BEHIND the first one
                     can_slide_this_way = (
                         piece.piece_type == chess.QUEEN or
                         (piece.piece_type == chess.ROOK and (df, dr) not in is_diagonal) or
@@ -71,7 +67,7 @@ def describe_defenders(board, square):
                     if can_slide_this_way:
                         label = f"{piece_names[piece.piece_type]} on {chess.square_name(sq)} (backup, behind another piece)"
                         results[piece.color].append(label)
-                    break  # stop after checking the second piece in this direction
+                    break  
             f += df
             r += dr
 
